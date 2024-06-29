@@ -6,7 +6,10 @@ def on_message(client, userdata, message):
 def setup_mqtt_client():
     client = mqtt.Client()
     client.on_message = on_message
-    client.connect("mqtt.eclipse.org", 1883, 60)
+    try:
+        client.connect("mqtt.eclipse.org", 1883, 60)
+    except Exception as e:
+        print(f"Erro ao conectar ao broker MQTT: {e}")
     client.subscribe("iot/sensor")
     return client
 
