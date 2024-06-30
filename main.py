@@ -22,7 +22,7 @@ tarefa1.client()
 
 # Executar tarefa 2
 key = os.urandom(32)
-data = "Dados sensíveis do sensor".encode('utf-8')  # Codificar como UTF-8
+data = "Dados sensiveis do sensor".encode('utf-8')  # Codificar como UTF-8
 encrypted_data_aes = tarefa2.encrypt_aes(data, key)
 print(f"Dados encriptados com AES: {encrypted_data_aes}")
 decrypted_data_aes = tarefa2.decrypt_aes(encrypted_data_aes, key)
@@ -32,6 +32,16 @@ encrypted_data_chacha20 = tarefa2.encrypt_chacha20(data, key)
 print(f"Dados encriptados com ChaCha20: {encrypted_data_chacha20}")
 decrypted_data_chacha20 = tarefa2.decrypt_chacha20(encrypted_data_chacha20, key)
 print(f"Dados desencriptados com ChaCha20: {decrypted_data_chacha20.decode('utf-8')}")  # Decodificar como UTF-8
+
+encrypted_data_salsa20 = tarefa2.encrypt_chacha20(data, key)
+print(f"Dados encriptados com Salsa20: {encrypted_data_salsa20}")
+decrypted_data_salsa20 = tarefa2.decrypt_chacha20(encrypted_data_salsa20, key)
+print(f"Dados desencriptados com Salsa20: {decrypted_data_salsa20.decode('utf-8')}")
+
+encrypted_data_fernet = tarefa2.encrypt_chacha20(data, key)
+print(f"Dados encriptados com Fernet: {encrypted_data_fernet}")
+decrypted_data_fernet = tarefa2.decrypt_chacha20(encrypted_data_fernet, key)
+print(f"Dados desencriptados com Fernet: {decrypted_data_fernet.decode('utf-8')}")
 
 # Executar tarefa 3
 data_hash = tarefa3.generate_hash(data)

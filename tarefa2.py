@@ -1,6 +1,8 @@
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.primitives import padding
 from cryptography.hazmat.backends import default_backend
+from Crypto.Cipher import Salsa20
+from cryptography.fernet import Fernet
 import os
 
 def encrypt_aes(data, key):
@@ -46,3 +48,38 @@ def decrypt_chacha20(encrypted_data, key):
         return data
     except Exception as e:
         print(f"Erro na descriptografia ChaCha20: {e}")
+
+# Funções de criptografia e descriptografia para Salsa20
+def encrypt_salsa20(data, key):
+    try:
+        cipher = Salsa20.new(key=key)
+        encrypted_data = cipher.nonce + cipher.encrypt(data)
+        return encrypted_data
+    except Exception as e:
+        print(f"Erro na criptografia Salsa20: {e}")
+
+def decrypt_salsa20(encrypted_data, key):
+    try:
+        nonce = encrypted_data[:8]
+        cipher = Salsa20.new(key=key, nonce=nonce)
+        data = cipher.decrypt(encrypted_data[8:])
+        return data
+    except Exception as e:
+        print(f"Erro na descriptografia Salsa20: {e}")
+
+# Funções de criptografia e descriptografia para Fernet
+def encrypt_fernet(data, key):
+    try:
+        fernet = Fernet(key)
+        encrypted_data = fernet.encrypt(data)
+        return encrypted_data
+    except Exception as e:
+        print(f"Erro na criptografia Fernet: {e}")
+
+def decrypt_fernet(encrypted_data, key):
+    try:
+        fernet = Fernet(key)
+        data = fernet.decrypt(encrypted_data)
+        return data
+    except Exception as e:
+        print(f"Erro na descriptografia Fernet: {e}")
